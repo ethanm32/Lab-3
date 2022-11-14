@@ -28,16 +28,18 @@ const observeAdd = {
         divnote.style.border = "1px solid black";
         divnote.style.borderRadius = "5px";
 
-        //deleteBtn.onclick = function () {
-        //    var id = event.srcElement.id;
-        //    document.getElementById(id).innerHTML = "";
-        //    deleteBtn.remove();
-        //    editBtn.remove();
-        //};
+        const deleteNote = {
+            next: function() {
+                var id = event.srcElement.id;
+                document.getElementById(id).innerHTML = "";
+                deleteBtn.remove();
+                editBtn.remove();
+            }
+        }
 
-        var observable = Rx.Observable.fromEvent(deleteBtn, 'click');
+        var observableDel = Rx.Observable.fromEvent(deleteBtn, 'click');
 
-        observable.subscribe(x => console.log(x));
+        observableDel.subscribe(deleteNote);
 
         editBtn.onclick = function() {
             var id = event.srcElement.id;
