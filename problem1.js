@@ -34,6 +34,7 @@ const observeAdd = {
                 document.getElementById(id).innerHTML = "";
                 deleteBtn.remove();
                 editBtn.remove();
+                
             }
         }
 
@@ -53,12 +54,18 @@ const observeAdd = {
                 
                 document.body.appendChild(saveBtn);
                 
-                saveBtn.onclick = function() {
-                    var saveId = event.srcElement.id; 
-                    console.log(counter);
-                    document.getElementById(saveId).contentEditable = "false";
-                    saveBtn.remove();
+                const saveNote = {
+                    next: function() {
+                        var saveId = event.srcElement.id; 
+                        console.log(counter);
+                        document.getElementById(saveId).contentEditable = "false";
+                        saveBtn.remove();
+                    }
                 }
+        
+                var observableSave = Rx.Observable.fromEvent(saveBtn, 'click');
+        
+                observableSave.subscribe(saveNote);
             }
         }
 
