@@ -41,22 +41,32 @@ const observeAdd = {
 
         observableDel.subscribe(deleteNote);
 
-        editBtn.onclick = function() {
-            var id = event.srcElement.id;
-            document.getElementById(id).contentEditable = "true"; 
-            var saveBtn = document.createElement('button');
-            saveBtn.innerHTML = "Save Changes";
-            saveBtn.setAttribute("id", id);
-            
-            document.body.appendChild(saveBtn);
-            
-            saveBtn.onclick = function() {
-                var saveId = event.srcElement.id; 
-                console.log(counter);
-                document.getElementById(saveId).contentEditable = "false";
-                saveBtn.remove();
+        
+
+        const editNote = {
+            next: function() {
+                var id = event.srcElement.id;
+                document.getElementById(id).contentEditable = "true"; 
+                var saveBtn = document.createElement('button');
+                saveBtn.innerHTML = "Save Changes";
+                saveBtn.setAttribute("id", id);
+                
+                document.body.appendChild(saveBtn);
+                
+                saveBtn.onclick = function() {
+                    var saveId = event.srcElement.id; 
+                    console.log(counter);
+                    document.getElementById(saveId).contentEditable = "false";
+                    saveBtn.remove();
+                }
             }
-        }  
+        }
+
+        var observableEdit = Rx.Observable.fromEvent(editBtn, 'click');
+
+        observableEdit.subscribe(editNote);
+
+
         return divnote.id;
     }
 }
