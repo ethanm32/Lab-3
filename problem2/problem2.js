@@ -1,5 +1,5 @@
 var countBtn = document.getElementById("countdownBtn");
-
+var displayTime = document.getElementById("displayTime");
 const getInput = {
     next: function() {
         var hrs = document.getElementById("hours").value;
@@ -19,7 +19,7 @@ const getInput = {
             var time = String(seconds/3600);
             var date = new Date(0, 0);
             date.setSeconds(+time * 60 * 60);
-            console.log(date.toTimeString().slice(0,8));
+            displayTime.innerHTML = date.toTimeString().slice(0,8);
           })
     }
 }

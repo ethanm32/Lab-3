@@ -3,18 +3,18 @@
 
 <html>
     <body>
-        <div>
+        <div id="countBox">
             <input type="text" id="hours" placeholder="hrs"><span>:</span>
             <input type="text" id="minutes" placeholder="min"><span>:</span>
             <input type="text" id="seconds" placeholder="sec">
             <button id="countdownBtn">Start Countdown</button>
         </div>
-        
+        <div id="displayTime"></div>
             
         
     </body>
     <style>
-        div {
+        #countBox {
             position: absolute;
             left: 50%;
             top: 300px;
@@ -23,7 +23,17 @@
             height: 250px;
             background-color: lightgray;
         }
+        
 
+        #displayTime {
+            position: absolute;
+            left: 50%;
+            top: 550px;
+            transform: translate(-50%, -50%);
+            font-size: 70px;
+            padding: 126px;
+            
+        }
         #hours {
             margin-left: 25px;
         }
