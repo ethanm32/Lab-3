@@ -25,4 +25,4 @@ const getInput = {
 }
 
 var countObservable = Rx.Observable.fromEvent(countBtn, 'click');
-countObservable.subscribe(getInput)
+countObservable.subscribe(getInput);
