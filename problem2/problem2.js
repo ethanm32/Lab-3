@@ -1,5 +1,6 @@
 var countBtn = document.getElementById("countdownBtn");
 var displayTime = document.getElementById("displayTime");
+var count = 0;
 const getInput = {
     next: function() {
         var hrs = document.getElementById("hours").value;
@@ -14,15 +15,28 @@ const getInput = {
         const durationsecs = parseInt(sec);
         const durationnew = durationhrs + durationmins;
         const duration = durationnew + durationsecs;
-        
-        Rx.Observable.interval(1000).map(count => duration - count).subscribe(seconds => {
+        let startCountSub;
+        startCountSub = Rx.Observable.interval(1000).map(count => duration - count).subscribe(seconds => {
+            countBtn.disabled = true;
             var time = String(seconds/3600);
             var date = new Date(0, 0);
             date.setSeconds(+time * 60 * 60);
-            displayTime.innerHTML = date.toTimeString().slice(0,8);
+            displayTime.innerHTML = date.toTimeString().slice(0,8);      
+            if(displayTime.innerHTML == "00:00:00") {
+                startCountSub.unsubscribe();
+                countBtn.disabled = false;
+            }      
           })
+
+
     }
+
+    
+
 }
+
 
 var countObservable = Rx.Observable.fromEvent(countBtn, 'click');
 countObservable.subscribe(getInput);
+
+
