@@ -1,6 +1,7 @@
 let counter = 0;
+let notecounter = 0;
 var addBtn = document.getElementById("addBtn");
-
+var childBtn = "";
 
 const observeAdd = {
     next: function() {
@@ -35,18 +36,50 @@ const observeAdd = {
         const deleteNote = {
             next: function() {
                 var id = event.srcElement.id;
-                document.getElementById(id).innerHTML = "";
+                document.getElementById(id).remove();
+                var parent = divnote;
+                var child = parent.lastElementChild; 
+                while (child) {
+                    parent.removeChild(child);
+                    child = parent.lastElementChild;
+                }    
                 deleteBtn.remove();
                 editBtn.remove();
                 
-            }
+                
+           }
+           
         }
 
         var observableDel = Rx.Observable.fromEvent(deleteBtn, 'click');
+            observableDel.subscribe(deleteNote);
 
-        observableDel.subscribe(deleteNote);
-
+        const subAdd = {
+            next: function() {
+                let divsub = document.createElement('div');
+                var text = document.getElementById("text-note").value;
+                divsub.innerHTML += text;
+                divsub.setAttribute("id", "div" + counter);
+                divnote.appendChild(divsub);
+                divnote.style.whiteSpace = "pre-wrap";
+                divnote.style.wordWrap = "word-break";
+                var backgcol = document.getElementById('colour').value;
         
+                divsub.style.backgroundColor = backgcol;
+                divsub.style.border = "1px solid black";
+                divsub.style.borderRadius = "5px";
+        
+                
+            
+                }
+            }
+        
+            var observableDelSub = Rx.Observable.fromEvent(deleteBtn, 'click');
+            observableDelSub.subscribe(deleteNote);
+
+            var subObservable = Rx.Observable.fromEvent(childBtn, 'click');
+            subObservable .subscribe(subAdd)
+    
 
         const editNote = {
             next: function() {
@@ -77,8 +110,7 @@ const observeAdd = {
 
         observableEdit.subscribe(editNote);
 
-        var subObservable = Rx.Observable.fromEvent(childBtn, 'click');
-        subObservable .subscribe(subAdd)
+        
 
         return divnote.id;
     }
@@ -86,27 +118,6 @@ const observeAdd = {
 }
 
 
-const subAdd = {
-    next: function() {
-        counter++;
-        let divnote = document.createElement('div');
-        var text = document.getElementById("text-note").value;
-        divnote.innerHTML += text;
-        divnote.setAttribute("id", "div" + counter);
-        document.body.appendChild(divnote);
-        divnote.style.whiteSpace = "pre-wrap";
-        divnote.style.wordWrap = "word-break";
-        var backgcol = document.getElementById('colour').value;
-
-
-        divnote.style.backgroundColor = backgcol;
-        divnote.style.border = "1px solid black";
-        divnote.style.borderRadius = "5px";
-
-        
-    
-        }
-    }
 
         
     
@@ -114,5 +125,3 @@ var addObservable = Rx.Observable.fromEvent(addBtn, 'click');
 addObservable.subscribe(observeAdd);
 
 
-
-    
