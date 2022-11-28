@@ -1,5 +1,5 @@
 let counter = 0;
-let notecounter = 0;
+let subcounter = 0;
 var addBtn = document.getElementById("addBtn");
 var childBtn = "";
 
@@ -38,15 +38,13 @@ const observeAdd = {
                 var id = event.srcElement.id;
                 document.getElementById(id).remove();
                 var parent = divnote;
-                var child = parent.lastElementChild; 
+                var child = parent.lastElementChild;
                 while (child) {
                     parent.removeChild(child);
                     child = parent.lastElementChild;
-                }    
+                } 
                 deleteBtn.remove();
                 editBtn.remove();
-                
-                
            }
            
         }
@@ -56,30 +54,49 @@ const observeAdd = {
 
         const subAdd = {
             next: function() {
+                subcounter++;
                 let divsub = document.createElement('div');
                 var text = document.getElementById("text-note").value;
                 divsub.innerHTML += text;
-                divsub.setAttribute("id", "div" + counter);
+                divsub.setAttribute("id", "divsub" + subcounter);
                 divnote.appendChild(divsub);
                 divnote.style.whiteSpace = "pre-wrap";
                 divnote.style.wordWrap = "word-break";
                 var backgcol = document.getElementById('colour').value;
-        
+                var deletesubBtn = document.createElement('button');
+                deletesubBtn.setAttribute("id", "divsub" + subcounter);
+                deletesubBtn.innerHTML = "Delete Subnote";
+                divnote.appendChild(deletesubBtn)
                 divsub.style.backgroundColor = backgcol;
                 divsub.style.border = "1px solid black";
                 divsub.style.borderRadius = "5px";
         
-                
+                const subDelete = {
+                    next: function() {
+                        var id = event.srcElement.id;
+                        document.getElementById(id).remove();
+                        deletesubBtn.remove();
+                        
+                        
+                   }
+                }
+                var deleteSub = Rx.Observable.fromEvent(deletesubBtn, 'click');
+                deleteSub.subscribe(subDelete);
             
                 }
+
+                
             }
         
+    
+
             var observableDelSub = Rx.Observable.fromEvent(deleteBtn, 'click');
             observableDelSub.subscribe(deleteNote);
 
             var subObservable = Rx.Observable.fromEvent(childBtn, 'click');
-            subObservable .subscribe(subAdd)
-    
+            subObservable.subscribe(subAdd)
+
+           
 
         const editNote = {
             next: function() {

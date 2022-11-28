@@ -25,6 +25,7 @@ const getInput = {
             if(displayTime.innerHTML == "00:00:00") {
                 startCountSub.unsubscribe();
                 countBtn.disabled = false;
+                alert("Time up!");
             }      
           })
 
