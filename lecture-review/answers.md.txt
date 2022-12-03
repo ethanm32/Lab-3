@@ -1,0 +1,21 @@
+1. A stream is an abstraction that is used for data that may not be present and may never arrive in the future. Streams implement the observer
+   pattern. They are like promises in the sense they work asynchronously but they can handle multiple values. Streams can be useful to model
+   all application states as streams to ensure mouse clicks and DOM changes can be handled using the same logic
+2. The advantages of using streams over promises are 
+    - Streams can be combined with other streams to mitigate problems of dependent async operations
+    - Very scalable
+    - Readable
+    - Easy to add new features via new event
+   
+   The disadvantages are
+    - Higher skill level required for stream programming - Rxjs
+    - Can be hard to predict Stream behaviour
+    - Heavyweight frameworks 
+
+3. The consequences of async tasks sharing a global state include:
+	- Hard to extend the async tasks due to the singular, global state
+	- Hard to debug
+	- Makes code less readable and clean
+
+   This could be alleviated by using classes to store the global variables which could be shared and extended as necessary.
+ 

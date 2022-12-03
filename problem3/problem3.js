@@ -11,6 +11,8 @@ const observeAdd = {
         divnote.innerHTML += text;
         divnote.setAttribute("id", "div" + counter);
         document.body.appendChild(divnote);
+
+
         var deleteBtn = document.createElement('button');
         deleteBtn.setAttribute("id", "div" + counter);
         deleteBtn.innerHTML = "Delete";
@@ -18,12 +20,16 @@ const observeAdd = {
         editBtn.innerHTML = "Edit";
         editBtn.setAttribute("id", "div" + counter);
         var childBtn = document.createElement('button');
+
+
         childBtn.innerHTML = "Add Sub Note";
         childBtn.setAttribute("id", "div" + counter);
         document.body.appendChild(deleteBtn);
         divnote.style.width = "fit-content";
         document.body.appendChild(editBtn);
         document.body.appendChild(childBtn);
+
+
         divnote.style.whiteSpace = "pre-wrap";
         divnote.style.wordWrap = "word-break";
         var backgcol = document.getElementById('colour').value;
@@ -33,6 +39,7 @@ const observeAdd = {
         divnote.style.border = "1px solid black";
         divnote.style.borderRadius = "5px";
 
+        //deletes note and ensures subnotes are deleted(child elements)
         const deleteNote = {
             next: function() {
                 var id = event.srcElement.id;
@@ -48,10 +55,12 @@ const observeAdd = {
            }
            
         }
-
+        //subscribes to deleting the note
         var observableDel = Rx.Observable.fromEvent(deleteBtn, 'click');
             observableDel.subscribe(deleteNote);
 
+
+        //adds the subnote. Very similar to the add note 
         const subAdd = {
             next: function() {
                 subcounter++;
@@ -60,21 +69,26 @@ const observeAdd = {
                 divsub.innerHTML += text;
                 divsub.setAttribute("id", "divsub" + subcounter);
                 divnote.appendChild(divsub);
+
                 divnote.style.whiteSpace = "pre-wrap";
                 divnote.style.wordWrap = "word-break";
                 var backgcol = document.getElementById('colour').value;
+
                 var deletesubBtn = document.createElement('button');
                 deletesubBtn.setAttribute("id", "divsub" + subcounter);
                 deletesubBtn.innerHTML = "Delete Subnote";
                 divnote.appendChild(deletesubBtn)
+
                 var addSubBtn = document.createElement('button');
                 addSubBtn.setAttribute("id", "divsub" + subcounter);
                 addSubBtn.innerHTML = "Add Subnote";
                 divnote.appendChild(addSubBtn)
+
                 divsub.style.backgroundColor = backgcol;
                 divsub.style.border = "1px solid black";
                 divsub.style.borderRadius = "5px";
         
+                //deletes the sub note
                 const subDelete = {
                     next: function() {
                         var id = event.srcElement.id;
@@ -96,15 +110,17 @@ const observeAdd = {
             }
         
     
-
+            //subscribes to the delete function
             var observableDelSub = Rx.Observable.fromEvent(deleteBtn, 'click');
             observableDelSub.subscribe(deleteNote);
 
+            //subscribes to adding the child button
             var subObservable = Rx.Observable.fromEvent(childBtn, 'click');
             subObservable.subscribe(subAdd)
 
            
 
+        //allows for editing the button. Not for subnotes
         const editNote = {
             next: function() {
                 var id = event.srcElement.id;
@@ -130,6 +146,7 @@ const observeAdd = {
             }
         }
 
+        //subscribes to the edit function
         var observableEdit = Rx.Observable.fromEvent(editBtn, 'click');
 
         observableEdit.subscribe(editNote);
@@ -144,7 +161,7 @@ const observeAdd = {
 
 
         
-    
+//subscribes to the add button   
 var addObservable = Rx.Observable.fromEvent(addBtn, 'click');
 addObservable.subscribe(observeAdd);
 
