@@ -67,6 +67,10 @@ const observeAdd = {
                 deletesubBtn.setAttribute("id", "divsub" + subcounter);
                 deletesubBtn.innerHTML = "Delete Subnote";
                 divnote.appendChild(deletesubBtn)
+                var addSubBtn = document.createElement('button');
+                addSubBtn.setAttribute("id", "divsub" + subcounter);
+                addSubBtn.innerHTML = "Add Subnote";
+                divnote.appendChild(addSubBtn)
                 divsub.style.backgroundColor = backgcol;
                 divsub.style.border = "1px solid black";
                 divsub.style.borderRadius = "5px";
@@ -76,12 +80,15 @@ const observeAdd = {
                         var id = event.srcElement.id;
                         document.getElementById(id).remove();
                         deletesubBtn.remove();
-                        
+                        addSubBtn.remove();
                         
                    }
                 }
                 var deleteSub = Rx.Observable.fromEvent(deletesubBtn, 'click');
                 deleteSub.subscribe(subDelete);
+
+                var addSub = Rx.Observable.fromEvent(addSubBtn, 'click');
+                addSub.subscribe(subAdd);
             
                 }
 
